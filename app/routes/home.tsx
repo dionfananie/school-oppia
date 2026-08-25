@@ -1,17 +1,17 @@
 import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { PicaGames } from "../pica/PicaGames";
 
 export function meta({}: Route.MetaArgs) {
 	return [
-		{ title: "New React Router App" },
-		{ name: "description", content: "Welcome to React Router!" },
+		{ title: "Pica Games · Belajar sambil bermain untuk anak 2–7 tahun" },
+		{
+			name: "description",
+			content:
+				"Pica Games: 17 permainan belajar untuk anak usia 2–7 tahun — kenali, cocokkan, hitung. Aman, tanpa iklan, dengan suara & animasi.",
+		},
 	];
 }
 
-export function loader({ context }: Route.LoaderArgs) {
-	return { message: context.cloudflare.env.VALUE_FROM_CLOUDFLARE };
-}
-
-export default function Home({ loaderData }: Route.ComponentProps) {
-	return <Welcome message={loaderData.message} />;
+export default function Home() {
+	return <PicaGames />;
 }

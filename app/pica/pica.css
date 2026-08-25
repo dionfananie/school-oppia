@@ -1,0 +1,1627 @@
+/* Pica Games — ported from html/phase-1.html, scoped under .pica.
+   Direction: human-approachable (same as the homepage). */
+
+.pica {
+	/* tokens */
+	--bg: oklch(98% 0.004 240);
+	--surface: oklch(100% 0 0);
+	--fg: oklch(20% 0.02 240);
+	--muted: oklch(50% 0.018 240);
+	--muted-strong: color-mix(in oklch, var(--muted) 76%, black);
+	--border: oklch(90% 0.006 240);
+	--accent: oklch(56% 0.12 170);
+
+	--sun: oklch(0.8 0.16 88);
+	--mint: oklch(0.74 0.13 158);
+	--coral: oklch(0.73 0.16 30);
+	--sky: oklch(0.72 0.12 235);
+	--grape: oklch(0.66 0.2 295);
+	--pink: oklch(0.7 0.19 345);
+	--ink-sun: color-mix(in oklch, var(--sun) 52%, black);
+	--ink-mint: color-mix(in oklch, var(--mint) 52%, black);
+	--ink-coral: color-mix(in oklch, var(--coral) 52%, black);
+	--ink-sky: color-mix(in oklch, var(--sky) 52%, black);
+	--tile-sun: color-mix(in oklch, var(--sun) 24%, var(--surface));
+	--tile-mint: color-mix(in oklch, var(--mint) 24%, var(--surface));
+	--tile-coral: color-mix(in oklch, var(--coral) 24%, var(--surface));
+	--tile-sky: color-mix(in oklch, var(--sky) 24%, var(--surface));
+	--tile-grape: color-mix(in oklch, var(--grape) 24%, var(--surface));
+	--tile-pink: color-mix(in oklch, var(--pink) 24%, var(--surface));
+
+	--accent-deep: color-mix(in oklch, var(--accent) 82%, black);
+	--accent-text: color-mix(in oklch, var(--accent) 64%, black);
+	--ok: oklch(0.62 0.16 155);
+	--ok-soft: color-mix(in oklch, var(--ok) 16%, var(--surface));
+	--err: oklch(0.58 0.18 26);
+	--err-soft: color-mix(in oklch, var(--err) 16%, var(--surface));
+	--gold: oklch(0.8 0.16 85);
+
+	--font-display: "Söhne", "Avenir Next", Avenir, "Century Gothic", -apple-system,
+		BlinkMacSystemFont, system-ui, sans-serif;
+	--font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+	--font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, monospace;
+
+	--fs-body: 16px;
+	--fs-meta: 13px;
+	--gutter: clamp(18px, 5vw, 30px);
+	--radius: 14px;
+	--radius-lg: 20px;
+
+	min-height: 100vh;
+	background: var(--bg);
+	color: var(--fg);
+	font-family: var(--font-body);
+	font-size: var(--fs-body);
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+.pica img,
+.pica svg {
+	display: block;
+	max-width: 100%;
+}
+
+.pica button {
+	font: inherit;
+	cursor: pointer;
+	touch-action: manipulation;
+}
+
+.pica p {
+	margin: 0;
+}
+
+.pica :focus-visible {
+	outline: 3px solid color-mix(in oklch, var(--accent) 45%, transparent);
+	outline-offset: 2px;
+	border-radius: 6px;
+}
+
+.pica .app {
+	max-width: 560px;
+	margin: 0 auto;
+	padding: var(--gutter) var(--gutter) 72px;
+}
+
+.pica .i {
+	width: 24px;
+	height: 24px;
+}
+
+/* ─── hub ─────────────────────────────────────────────────────────────── */
+.pica .brand-row {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	padding: 6px 0 0;
+	flex-wrap: wrap;
+}
+
+.pica .brand {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(26px, 7vw, 32px);
+	letter-spacing: -0.02em;
+	display: flex;
+	align-items: center;
+	gap: 9px;
+}
+
+.pica .brand-dot {
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	background: var(--accent);
+}
+
+.pica .tagline {
+	font-size: var(--fs-meta);
+	color: var(--muted-strong);
+	margin-right: auto;
+}
+
+.pica .hub-note {
+	background: var(--tile-sun);
+	color: var(--ink-sun);
+	font-size: var(--fs-meta);
+	padding: 10px 14px;
+	border-radius: var(--radius);
+	margin: 16px 0 4px;
+}
+
+.pica .resume {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 12px 14px;
+	width: 100%;
+	margin-top: 16px;
+	text-align: left;
+	box-shadow: 0 4px 14px color-mix(in oklch, var(--fg) 6%, transparent);
+}
+
+.pica .resume:hover {
+	border-color: color-mix(in oklch, var(--fg) 24%, transparent);
+}
+
+.pica .resume-txt {
+	flex: 1;
+	min-width: 0;
+}
+
+.pica .resume-l {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 15px;
+	display: block;
+}
+
+.pica .resume-s {
+	font-size: 12px;
+	color: var(--muted-strong);
+}
+
+.pica .cat {
+	margin-top: var(--radius);
+}
+
+.pica .cat-head {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 12px;
+}
+
+.pica .cat-chip {
+	width: 38px;
+	height: 38px;
+	border-radius: 12px;
+	display: grid;
+	place-items: center;
+	flex: none;
+}
+
+.pica .cat-chip .i {
+	width: 21px;
+	height: 21px;
+}
+
+.pica .chip-sun {
+	background: var(--sun);
+}
+
+.pica .chip-mint {
+	background: var(--mint);
+}
+
+.pica .chip-coral {
+	background: var(--coral);
+}
+
+.pica .cat-name {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 20px;
+}
+
+.pica .cat-desc {
+	font-size: 12px;
+	color: var(--muted-strong);
+	margin-left: auto;
+	text-align: right;
+}
+
+.pica .grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+}
+
+.pica .gcard {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 12px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	text-align: left;
+	box-shadow: 0 1px 2px color-mix(in oklch, var(--fg) 4%, transparent);
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pica .gcard:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 20px color-mix(in oklch, var(--fg) 10%, transparent);
+}
+
+.pica .gcard:active {
+	transform: scale(0.98);
+}
+
+.pica .g-ic {
+	position: relative;
+	width: 54px;
+	height: 54px;
+	border-radius: 15px;
+	display: grid;
+	place-items: center;
+}
+
+.pica .g-ic::before {
+	content: "";
+	position: absolute;
+	inset: 5px;
+	background: var(--surface);
+	border-radius: 11px;
+}
+
+.pica .g-ic svg {
+	position: relative;
+	width: 36px;
+	height: 36px;
+}
+
+.pica .tile-sun {
+	background: var(--tile-sun);
+}
+.pica .tile-mint {
+	background: var(--tile-mint);
+}
+.pica .tile-coral {
+	background: var(--tile-coral);
+}
+.pica .tile-sky {
+	background: var(--tile-sky);
+}
+.pica .tile-grape {
+	background: var(--tile-grape);
+}
+.pica .tile-pink {
+	background: var(--tile-pink);
+}
+
+.pica .g-name {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 16px;
+	line-height: 1.2;
+}
+
+.pica .g-meta {
+	font-size: 12px;
+	color: var(--muted-strong);
+	display: flex;
+	align-items: center;
+	gap: 5px;
+}
+
+.pica .g-meta .i {
+	width: 13px;
+	height: 13px;
+	color: var(--gold);
+}
+
+.pica .foot {
+	margin-top: var(--radius);
+	text-align: center;
+	font-size: 12px;
+	color: var(--muted);
+}
+
+/* ─── top bar permainan ───────────────────────────────────────────────── */
+.pica .top {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	padding: 4px 0 16px;
+}
+
+.pica .tbtn {
+	width: 46px;
+	height: 46px;
+	border-radius: 14px;
+	border: 1px solid var(--border);
+	background: var(--surface);
+	display: grid;
+	place-items: center;
+	color: var(--fg);
+	flex: none;
+}
+
+.pica .tbtn:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .tbtn .i {
+	width: 22px;
+	height: 22px;
+}
+
+.pica .top-t {
+	flex: 1;
+	min-width: 0;
+}
+
+.pica .top-name {
+	display: block;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 17px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.pica .pill {
+	display: inline-block;
+	background: var(--tile-sky);
+	color: var(--ink-sky);
+	font-family: var(--font-mono);
+	font-weight: 700;
+	font-size: 12px;
+	padding: 2px 9px;
+	border-radius: 999px;
+	margin-top: 2px;
+}
+
+.pica .stars-line {
+	display: flex;
+	align-items: center;
+	gap: 5px;
+	font-family: var(--font-mono);
+	font-weight: 800;
+	font-size: 15px;
+	color: var(--ink-coral);
+	background: var(--tile-coral);
+	padding: 9px 13px;
+	border-radius: 999px;
+	flex: none;
+}
+
+.pica .stars-line .i {
+	width: 16px;
+	height: 16px;
+	color: var(--gold);
+}
+
+.pica .prog {
+	display: flex;
+	gap: 7px;
+	justify-content: center;
+	margin: 0 auto 20px;
+}
+
+.pica .dot {
+	width: 13px;
+	height: 13px;
+	border-radius: 50%;
+	background: color-mix(in oklch, var(--fg) 10%, transparent);
+	transition: transform 0.2s ease;
+}
+
+.pica .dot.done {
+	background: var(--accent-deep);
+}
+
+.pica .dot.cur {
+	background: var(--accent);
+	transform: scale(1.35);
+}
+
+/* ─── panggung soal ───────────────────────────────────────────────────── */
+.pica .stage {
+	animation: rise 0.35s ease-out;
+}
+
+@keyframes rise {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+.pica .qa {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+}
+
+.pica .q-text {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(20px, 5.5vw, 24px);
+	text-align: center;
+}
+
+.pica .q-text b {
+	color: var(--ink-coral);
+}
+
+.pica .target {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 10px 30px color-mix(in oklch, var(--fg) 8%, transparent);
+	width: min(224px, 66vw);
+	padding: 18px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.pica .t-name {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 18px;
+}
+
+.pica .color-block {
+	display: block;
+	border-radius: 16px;
+	height: 88px;
+	width: 100%;
+}
+
+.pica .target-block {
+	height: 110px;
+	border: 4px solid color-mix(in oklch, var(--fg) 8%, transparent);
+}
+
+.pica .pic {
+	display: grid;
+	place-items: center;
+	width: clamp(76px, 23vw, 94px);
+	height: clamp(76px, 23vw, 94px);
+	border-radius: 50%;
+	background: color-mix(in oklch, var(--fg) 5%, var(--surface));
+	border: 1px solid var(--border);
+}
+
+.pica .pic svg {
+	width: clamp(54px, 16vw, 70px);
+	height: clamp(54px, 16vw, 70px);
+}
+
+.pica .pic-lg {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+}
+
+.pica .pic-lg svg {
+	width: 96px;
+	height: 96px;
+}
+
+.pica .speak-btn {
+	width: 84px;
+	height: 84px;
+	border-radius: 50%;
+	border: none;
+	background: var(--accent-deep);
+	color: #fff;
+	display: grid;
+	place-items: center;
+	box-shadow: 0 10px 24px color-mix(in oklch, var(--accent) 35%, transparent);
+}
+
+.pica .speak-btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 12px 28px color-mix(in oklch, var(--accent) 40%, transparent);
+}
+
+.pica .speak-btn .i {
+	width: 38px;
+	height: 38px;
+}
+
+.pica .opts {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	width: 100%;
+	max-width: 520px;
+}
+
+.pica .opt {
+	background: var(--surface);
+	border: 2px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 14px 10px 12px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 9px;
+	min-height: 118px;
+	transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.pica .opt:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .opt:active {
+	transform: scale(0.97);
+}
+
+.pica .opt:disabled {
+	cursor: default;
+}
+
+.pica .opt-name {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 15px;
+	line-height: 1.1;
+}
+
+.pica .opt.right {
+	background: var(--ok-soft);
+	border-color: var(--ok);
+	animation: pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.pica .opt.right .opt-name {
+	color: color-mix(in oklch, var(--ok) 60%, black);
+}
+
+.pica .opt.wrong {
+	background: var(--err-soft);
+	border-color: var(--err);
+}
+
+@keyframes pop {
+	0% {
+		transform: scale(1);
+	}
+	45% {
+		transform: scale(1.1);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+.pica .opts-num {
+	grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+}
+
+.pica .opt.num {
+	min-height: 82px;
+	justify-content: center;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(28px, 9vw, 34px);
+}
+
+.pica .count-group {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 10px;
+	max-width: 520px;
+	min-height: 130px;
+	align-content: center;
+	padding: 8px;
+}
+
+.pica .count-group .obj {
+	animation: objIn 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+@keyframes objIn {
+	from {
+		opacity: 0;
+		transform: scale(0.2);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+.pica .count-group .pic {
+	width: 58px;
+	height: 58px;
+	border-radius: 16px;
+}
+
+.pica .count-group .pic svg {
+	width: 44px;
+	height: 44px;
+}
+
+.pica .opts-grp {
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 480px) {
+	.pica .opts-grp {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+.pica .opt.grp {
+	position: relative;
+	min-height: 150px;
+	padding: 14px;
+}
+
+.pica .grp-badge {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 26px;
+	height: 26px;
+	border-radius: 50%;
+	background: color-mix(in oklch, var(--fg) 6%, transparent);
+	color: var(--muted-strong);
+	display: grid;
+	place-items: center;
+	font-family: var(--font-mono);
+	font-weight: 800;
+	font-size: 12px;
+}
+
+.pica .grp-items {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	justify-content: center;
+	align-content: center;
+	width: 100%;
+}
+
+.pica .grp-items .pic {
+	width: 52px;
+	height: 52px;
+	border-radius: 14px;
+}
+
+.pica .grp-items .pic svg {
+	width: 38px;
+	height: 38px;
+}
+
+/* ─── layar akhir / selebrasi ─────────────────────────────────────────── */
+.pica .stage-end {
+	display: flex;
+	justify-content: center;
+	padding-top: 10px;
+}
+
+.pica .end-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 16px 40px color-mix(in oklch, var(--fg) 10%, transparent);
+	padding: 28px 20px;
+	width: min(420px, 100%);
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 10px;
+}
+
+.pica .end-card h2 {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(26px, 7vw, 32px);
+	margin: 0;
+}
+
+.pica .end-card p {
+	color: var(--muted-strong);
+}
+
+.pica .end-stars {
+	display: flex;
+	gap: 4px;
+	margin: 6px 0 2px;
+}
+
+.pica .star {
+	color: color-mix(in oklch, var(--fg) 14%, transparent);
+}
+
+.pica .star .i {
+	width: 26px;
+	height: 26px;
+}
+
+.pica .star.on {
+	color: var(--gold);
+	animation: pop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+.pica .level-up {
+	background: var(--tile-mint);
+	color: var(--ink-mint);
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 15px;
+	padding: 9px 16px;
+	border-radius: 999px;
+}
+
+.pica .end-actions {
+	display: flex;
+	gap: 12px;
+	margin-top: 8px;
+	width: 100%;
+}
+
+.pica .btn {
+	border: none;
+	border-radius: 999px;
+	padding: 16px 18px;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 16px;
+	flex: 1;
+	min-height: 52px;
+	transition: transform 0.12s ease, box-shadow 0.15s ease;
+}
+
+.pica .btn:active {
+	transform: scale(0.98);
+}
+
+.pica .btn-primary {
+	background: var(--accent-deep);
+	color: #fff;
+}
+
+.pica .btn-primary:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 10px 20px color-mix(in oklch, var(--accent) 30%, transparent);
+}
+
+.pica .btn-ghost {
+	background: var(--surface);
+	border: 2px solid var(--border);
+	color: var(--fg);
+}
+
+.pica .btn-ghost:hover {
+	border-color: color-mix(in oklch, var(--fg) 30%, transparent);
+}
+
+.pica .confetti {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	overflow: hidden;
+	z-index: 70;
+}
+
+.pica .confetti span {
+	position: absolute;
+	top: -24px;
+	display: block;
+	border-radius: 3px;
+}
+
+/* ─── Seri 2 (ported from kila-games-phase2.html) ────────────────────── */
+
+.pica .rounds {
+	text-align: center;
+	color: var(--ink-sky);
+	background: var(--tile-sky);
+	font-family: var(--font-mono);
+	font-weight: 800;
+	font-size: 13px;
+	padding: 7px 14px;
+	border-radius: 999px;
+	display: inline-block;
+	margin: 0 auto 16px;
+}
+
+/* progress strip on the hub */
+.pica .pstrip {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	padding: 12px 14px;
+	margin-top: 14px;
+}
+
+.pica .pstrip .i {
+	width: 20px;
+	height: 20px;
+	color: var(--gold);
+	flex: none;
+}
+
+.pica .pstrip-bar {
+	flex: 1;
+	height: 10px;
+	border-radius: 999px;
+	background: color-mix(in oklch, var(--fg) 8%, transparent);
+	overflow: hidden;
+}
+
+.pica .pstrip-fill {
+	height: 100%;
+	border-radius: 999px;
+	background: var(--gold);
+	transition: width 0.4s ease;
+}
+
+.pica .pstrip-txt {
+	font-size: 12px;
+	color: var(--muted-strong);
+	font-family: var(--font-mono);
+	font-weight: 800;
+}
+
+/* locked hub card */
+.pica .gcard.locked {
+	opacity: 0.72;
+}
+
+.pica .lock-g {
+	position: relative;
+	color: var(--muted-strong);
+	display: grid;
+	place-items: center;
+}
+
+.pica .lock-g .i {
+	width: 26px;
+	height: 26px;
+}
+
+/* ─── huruf (letter) ─────────────────────────────────────────────────── */
+
+.pica .target-letter {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(64px, 20vw, 92px);
+	line-height: 1;
+	color: var(--ink-coral);
+	display: grid;
+	place-items: center;
+	width: min(150px, 48vw);
+	height: min(150px, 48vw);
+	background: var(--tile-coral);
+	border-radius: 34px;
+	border: 1px solid var(--border);
+}
+
+.pica .target-word {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 10px 30px color-mix(in oklch, var(--fg) 8%, transparent);
+	width: min(300px, 90vw);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+}
+
+.pica .w-pic {
+	width: 72px;
+	height: 72px;
+	display: grid;
+	place-items: center;
+}
+
+.pica .w-pic svg {
+	width: 64px;
+	height: 64px;
+}
+
+.pica .w-text {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(26px, 8vw, 34px);
+	letter-spacing: 0.08em;
+}
+
+.pica .opt.letter {
+	padding: 16px;
+	min-height: 96px;
+	justify-content: center;
+}
+
+.pica .lbig {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(38px, 12vw, 48px);
+	line-height: 1;
+}
+
+/* ─── memori ─────────────────────────────────────────────────────────── */
+
+.pica .mgrid {
+	display: grid;
+	gap: 10px;
+	width: min(420px, 100%);
+	margin: 0 auto;
+	perspective: 700px;
+}
+
+.pica .mcard {
+	position: relative;
+	aspect-ratio: 1;
+	border: none;
+	background: transparent;
+	padding: 0;
+}
+
+.pica .mface {
+	position: absolute;
+	inset: 0;
+	border-radius: 16px;
+	display: grid;
+	place-items: center;
+	transition: transform 0.28s ease;
+	backface-visibility: hidden;
+}
+
+.pica .mfront {
+	background: var(--surface);
+	border: 2px solid var(--border);
+	transform: rotateY(180deg);
+	box-shadow: 0 6px 16px color-mix(in oklch, var(--fg) 8%, transparent);
+}
+
+.pica .mfront svg {
+	width: 58%;
+	height: 58%;
+}
+
+.pica .mback {
+	background: var(--sky);
+	border: 2px solid color-mix(in oklch, var(--sky) 62%, black);
+	color: #fff;
+	box-shadow: 0 6px 16px color-mix(in oklch, var(--fg) 10%, transparent);
+}
+
+.pica .mback svg {
+	width: 42%;
+	height: 42%;
+}
+
+.pica .mcard.up .mfront {
+	transform: rotateY(0);
+}
+
+.pica .mcard.up .mback {
+	transform: rotateY(180deg);
+}
+
+.pica .mcard.matched .mfront {
+	border-color: var(--ok);
+	background: var(--ok-soft);
+}
+
+/* ─── cari yang berbeda ──────────────────────────────────────────────── */
+
+.pica .odd-grid {
+	display: grid;
+	gap: 12px;
+	width: min(440px, 100%);
+	margin: 0 auto;
+}
+
+.pica .odd-cell {
+	aspect-ratio: 1;
+	border-radius: 18px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+	transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.pica .odd-cell:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .odd-cell:active {
+	transform: scale(0.96);
+}
+
+.pica .odd-cell svg {
+	width: 64%;
+	height: 64%;
+}
+
+.pica .odd-cell.wrong {
+	background: var(--err-soft);
+	border-color: var(--err);
+}
+
+.pica .odd-cell.right {
+	background: var(--ok-soft);
+	border-color: var(--ok);
+}
+
+.pica .odd-cell.mirror svg {
+	transform: scaleX(-1);
+}
+
+.pica .odd-cell.big svg {
+	width: 84%;
+	height: 84%;
+}
+
+/* ─── urutkan ────────────────────────────────────────────────────────── */
+
+.pica .order-row {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+	width: min(520px, 100%);
+	margin: 0 auto;
+}
+
+.pica .order-item {
+	min-width: 78px;
+	min-height: 84px;
+	border-radius: 18px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: clamp(24px, 7vw, 30px);
+	transition: transform 0.12s ease, border-color 0.15s ease, background 0.15s ease;
+}
+
+.pica .order-item:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .order-item:active {
+	transform: scale(0.95);
+}
+
+.pica .order-item.done {
+	border-color: var(--ok);
+	background: var(--ok-soft);
+	color: color-mix(in oklch, var(--ok) 55%, black);
+}
+
+.pica .order-item svg {
+	width: 52px;
+	height: 52px;
+}
+
+/* ─── pola ───────────────────────────────────────────────────────────── */
+
+.pica .pat-row {
+	display: flex;
+	gap: 8px;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.pica .pat-chip {
+	width: 58px;
+	height: 58px;
+	border-radius: 16px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+}
+
+.pica .pat-chip svg {
+	width: 38px;
+	height: 38px;
+}
+
+.pica .pat-chip.q {
+	border-style: dashed;
+	border-color: color-mix(in oklch, var(--fg) 32%, transparent);
+	background: color-mix(in oklch, var(--fg) 4%, transparent);
+}
+
+.pica .pat-opts {
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 4px;
+}
+
+.pica .pat-opt {
+	width: 82px;
+	height: 82px;
+	border-radius: 20px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+	transition: transform 0.12s ease, border-color 0.15s ease;
+}
+
+.pica .pat-opt:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .pat-opt:active {
+	transform: scale(0.95);
+}
+
+.pica .pat-opt svg {
+	width: 52px;
+	height: 52px;
+}
+
+.pica .pat-opt.right {
+	background: var(--ok-soft);
+	border-color: var(--ok);
+}
+
+.pica .pat-opt:disabled {
+	opacity: 0.55;
+	cursor: default;
+}
+
+/* ─── mana yang hilang ───────────────────────────────────────────────── */
+
+.pica .miss-row {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 520px;
+	margin: 0 auto;
+}
+
+.pica .miss-item {
+	width: 74px;
+	height: 74px;
+	border-radius: 16px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+	transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.pica .miss-item svg {
+	width: 48px;
+	height: 48px;
+}
+
+.pica .miss-item.hidden {
+	opacity: 0.22;
+	transform: scale(0.84);
+}
+
+/* ─── puzzle ─────────────────────────────────────────────────────────── */
+
+.pica .pzl-grid {
+	display: grid;
+	gap: 3px;
+	margin: 0 auto;
+}
+
+.pica .pzl-cell {
+	aspect-ratio: 1;
+	border-radius: 9px;
+	background-color: var(--tile-sky);
+	background-repeat: no-repeat;
+	border: 2px solid transparent;
+	transition: border-color 0.15s ease, transform 0.12s ease;
+}
+
+.pica .pzl-cell.correct {
+	border-color: var(--ok);
+}
+
+.pica .pzl-cell.sel {
+	border-color: var(--accent);
+	transform: scale(0.95);
+}
+
+/* ─── simon (piano / drum) ───────────────────────────────────────────── */
+
+.pica .keys {
+	display: flex;
+	gap: 6px;
+	justify-content: center;
+	width: 100%;
+	max-width: 460px;
+	margin: 0 auto;
+}
+
+.pica .key {
+	flex: 1;
+	min-width: 32px;
+	max-width: 54px;
+	height: clamp(62px, 18vw, 96px);
+	border-radius: 12px 12px 16px 16px;
+	border: 3px solid color-mix(in oklch, var(--fg) 16%, transparent);
+	display: grid;
+	place-items: end center;
+	padding-bottom: 8px;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 13px;
+	color: #fff;
+	transition: transform 0.08s ease;
+}
+
+.pica .key.lit {
+	transform: scale(0.94);
+	box-shadow: inset 0 0 0 4px color-mix(in oklch, var(--fg) 18%, transparent);
+}
+
+.pica .simon-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 12px;
+	width: min(440px, 100%);
+	margin: 0 auto;
+}
+
+@media (min-width: 480px) {
+	.pica .simon-grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+}
+
+.pica .pad {
+	aspect-ratio: 1.3;
+	border-radius: 20px;
+	border: 3px solid color-mix(in oklch, var(--fg) 16%, transparent);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	box-shadow: 0 4px 10px color-mix(in oklch, var(--fg) 8%, transparent);
+	transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.pica .pad svg {
+	width: 40%;
+	height: 40%;
+}
+
+.pica .pad-n {
+	font-family: var(--font-mono);
+	font-weight: 800;
+	font-size: 12px;
+	color: #fff;
+}
+
+.pica .pad.lit {
+	transform: scale(1.05);
+	box-shadow: 0 0 0 5px color-mix(in oklch, var(--fg) 14%, transparent),
+		0 10px 22px color-mix(in oklch, var(--fg) 14%, transparent);
+}
+
+/* ─── mewarnai ───────────────────────────────────────────────────────── */
+
+.pica .color-scene {
+	width: min(360px, 92vw);
+	margin: 0 auto;
+}
+
+.pica .color-scene svg {
+	width: 100%;
+	height: auto;
+	display: block;
+}
+
+.pica .reg {
+	stroke: #a8aeba;
+	stroke-width: 3;
+	stroke-linejoin: round;
+	cursor: pointer;
+	transition: fill 0.12s ease;
+}
+
+.pica .reg.done {
+	stroke: color-mix(in oklch, var(--fg) 55%, transparent);
+}
+
+.pica .color-pal {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	justify-content: center;
+	margin: 14px auto 0;
+	max-width: 420px;
+}
+
+.pica .cbtn {
+	width: 52px;
+	height: 52px;
+	border-radius: 50%;
+	border: 4px solid transparent;
+	transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.pica .cbtn.sel {
+	border-color: var(--fg);
+	transform: scale(1.12);
+}
+
+.pica .color-tools {
+	display: flex;
+	justify-content: center;
+	margin-top: 14px;
+}
+
+/* ─── shape builder ──────────────────────────────────────────────────── */
+
+.pica .build-scene {
+	width: min(340px, 90vw);
+	margin: 0 auto;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 10px;
+}
+
+.pica .build-slot {
+	aspect-ratio: 1;
+	border-radius: 18px;
+	border: 2px dashed color-mix(in oklch, var(--fg) 28%, transparent);
+	background: var(--surface);
+	display: grid;
+	place-items: center;
+	position: relative;
+}
+
+.pica .build-slot .sil svg {
+	width: 48px;
+	height: 48px;
+	opacity: 0.45;
+	filter: grayscale(0.55);
+}
+
+.pica .build-slot .slot-label {
+	position: absolute;
+	bottom: 5px;
+	left: 0;
+	right: 0;
+	text-align: center;
+	font-size: 10px;
+	color: var(--muted-strong);
+}
+
+.pica .build-slot.filled {
+	border-style: solid;
+	border-color: var(--ok);
+	background: var(--ok-soft);
+}
+
+.pica .build-slot.filled .sil svg {
+	opacity: 1;
+	filter: none;
+}
+
+.pica .build-tray {
+	display: flex;
+	gap: 10px;
+	justify-content: center;
+	flex-wrap: wrap;
+	margin-top: 16px;
+}
+
+.pica .build-opt {
+	width: 70px;
+	height: 70px;
+	border-radius: 18px;
+	background: var(--surface);
+	border: 2px solid var(--border);
+	display: grid;
+	place-items: center;
+	transition: transform 0.12s ease, border-color 0.15s ease;
+}
+
+.pica .build-opt:hover {
+	border-color: color-mix(in oklch, var(--fg) 28%, transparent);
+}
+
+.pica .build-opt:active {
+	transform: scale(0.94);
+}
+
+.pica .build-opt svg {
+	width: 46px;
+	height: 46px;
+}
+
+/* ─── akhir ronde & pencapaian ───────────────────────────────────────── */
+
+.pica .ach-new {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	background: color-mix(in oklch, var(--gold) 14%, var(--surface));
+	border: 2px solid var(--gold);
+	color: color-mix(in oklch, var(--gold) 58%, black);
+	padding: 10px 14px;
+	border-radius: 999px;
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 14px;
+	text-align: left;
+}
+
+.pica .ach-new .i {
+	width: 20px;
+	height: 20px;
+	flex: none;
+}
+
+/* ─── layar orang tua ────────────────────────────────────────────────── */
+
+.pica .parent-card {
+	background: var(--surface);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-lg);
+	box-shadow: 0 16px 40px color-mix(in oklch, var(--fg) 8%, transparent);
+	padding: 20px 16px;
+	max-width: 520px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.pica .parent-card h2 {
+	font-family: var(--font-display);
+	font-weight: 800;
+	font-size: 22px;
+	margin: 0;
+}
+
+.pica .pstats {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 10px;
+}
+
+.pica .pstat {
+	background: var(--bg);
+	border: 1px solid var(--border);
+	border-radius: var(--radius);
+	padding: 12px;
+	text-align: center;
+}
+
+.pica .pstat b {
+	display: block;
+	font-family: var(--font-display);
+	font-size: clamp(22px, 7vw, 28px);
+}
+
+.pica .pstat span {
+	font-size: 11px;
+	color: var(--muted-strong);
+}
+
+.pica .pcat {
+	font-family: var(--font-display);
+	font-weight: 700;
+	font-size: 14px;
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+}
+
+.pica .pbar {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.pica .pbar .pstrip-bar {
+	flex: 1;
+}
+
+.pica .ach-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+}
+
+.pica .ach-chip {
+	border: 1px solid var(--border);
+	background: var(--bg);
+	border-radius: 999px;
+	padding: 6px 12px;
+	font-size: 12px;
+	color: var(--muted-strong);
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+}
+
+.pica .ach-chip .i {
+	width: 14px;
+	height: 14px;
+}
+
+.pica .ach-chip.got {
+	border-color: var(--gold);
+	color: color-mix(in oklch, var(--gold) 58%, black);
+	background: color-mix(in oklch, var(--gold) 12%, var(--surface));
+	font-weight: 700;
+}
+
+.pica .fav-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 13px;
+	padding: 6px 0;
+	border-bottom: 1px solid var(--border);
+}
+
+.pica .fav-row:last-child {
+	border-bottom: none;
+}
+
+.pica .fav-row .g-ic {
+	width: 38px;
+	height: 38px;
+	border-radius: 11px;
+}
+
+.pica .fav-row .g-ic .i {
+	width: 20px;
+	height: 20px;
+	color: var(--gold);
+}
+
+.pica .fav-row b {
+	font-family: var(--font-mono);
+}
+
+.pica .ptools {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+}
+
+.pica .ptools .btn {
+	min-width: 150px;
+}
+
+.pica .pnote {
+	font-size: 12px;
+	color: var(--muted-strong);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.pica *,
+	.pica *::before,
+	.pica *::after {
+		animation-duration: 0.01ms !important;
+		animation-delay: 0ms !important;
+		transition-duration: 0.01ms !important;
+	}
+}
