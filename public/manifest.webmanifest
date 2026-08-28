@@ -1,0 +1,27 @@
+{
+  "name": "Pica Games — Belajar sambil bermain",
+  "short_name": "Pica",
+  "description": "17 permainan belajar untuk anak usia 2–7 tahun: kenali, cocokkan, hitung, logika, huruf & kreatif. Aman, tanpa iklan.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#FFF7E6",
+  "theme_color": "#FBBF24",
+  "lang": "id",
+  "icons": [
+    {
+      "src": "/pica-star.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/pica-star.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
