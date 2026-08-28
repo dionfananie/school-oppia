@@ -12,13 +12,13 @@
   "lang": "id",
   "icons": [
     {
-      "src": "/pica-star.svg",
+      "src": "/pica-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/pica-star.svg",
+      "src": "/pica-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"

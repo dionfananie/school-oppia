@@ -1,8 +1,8 @@
 /* Pica Games — Service Worker
    Strategy: offline-first untuk aset statis, network-first untuk navigasi.
    Versioned cache agar update bersih. */
-const CACHE = "pica-v1";
-const CORE_ASSETS = ["/", "/manifest.webmanifest", "/pica-star.svg", "/favicon.ico"];
+const CACHE = "pica-v2";
+const CORE_ASSETS = ["/", "/manifest.webmanifest", "/pica-icon.svg", "/pica-star.svg", "/favicon.ico"];
 
 // Install: buka cache & precache core shell.
 self.addEventListener("install", (event) => {
