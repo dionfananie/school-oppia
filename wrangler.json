@@ -10,5 +10,12 @@
 	"upload_source_maps": true,
 	"vars": {
 		"VALUE_FROM_CLOUDFLARE": "Hello from Cloudflare"
-	}
+	},
+	"d1_databases": [
+		{
+			"binding": "pica_db",
+			"database_name": "pica-db",
+			"database_id": "6e64996c-289e-4cfe-aa63-6966eb9d899c"
+		}
+	]
 }
