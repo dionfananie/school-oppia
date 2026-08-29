@@ -1,10 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { audioState, sfx, speak, stopSpeak } from "./audio";
 import { GAMES, unlocked } from "./data";
 import { GameScreen } from "./GameScreen";
 import { Hub } from "./Hub";
 import { ParentScreen } from "./ParentScreen";
 import { load, save } from "./storage";
+import {
+	logout,
+	pullProgress,
+	pushProgress,
+	useAuth,
+	notifyAuthChange,
+} from "./auth";
 import type { GameDef } from "./types";
 import "./pica.css";
 
@@ -14,6 +21,8 @@ export function PicaGames() {
 	const [muted, setMuted] = useState(false);
 	const [screen, setScreen] = useState<Screen>({ name: "hub" });
 	const [round, setRound] = useState(0);
+	const { user, loading: authLoading } = useAuth();
+	const syncedInitialRef = useRef(false);
 
 	// Read the saved mute preference only after hydration, so the server-rendered
 	// markup matches the first client render. Mutations happen in toggleMute.
@@ -23,12 +32,39 @@ export function PicaGames() {
 		setMuted(saved);
 	}, []);
 
+	// First sync when logged in: push local up, then pull server down & restore.
+	// This keeps cross-device progress roughly in sync (last-write-wins by upload time).
+	useEffect(() => {
+		if (authLoading || !user || syncedInitialRef.current) return;
+		syncedInitialRef.current = true;
+		async function initialSync() {
+			if (user) {
+				await pushProgress();
+				await pullProgress();
+			}
+		}
+		void initialSync();
+	}, [authLoading, user]);
+
+	// Upload progress whenever the player returns to the hub (after finishing a game)
+	// while signed in.
+	useEffect(() => {
+		if (!user || screen.name !== "hub") return;
+		void pushProgress();
+	}, [user, screen]);
+
 	function toggleMute() {
 		const next = !muted;
 		if (next) stopSpeak();
 		audioState.muted = next;
 		setMuted(next);
 		save("muted", next);
+	}
+
+	async function handleLogout() {
+		await logout();
+		syncedInitialRef.current = false;
+		notifyAuthChange();
 	}
 
 	function openGame(id: string) {
@@ -61,11 +97,19 @@ export function PicaGames() {
 					<Hub
 						onOpenGame={openGame}
 						onOpenParent={() => setScreen({ name: "parent" })}
+						user={user}
+						onLogout={() => void handleLogout()}
 						muted={muted}
 						onToggleMute={toggleMute}
 					/>
 				) : screen.name === "parent" ? (
-					<ParentScreen muted={muted} onToggleMute={toggleMute} onBack={backToHub} />
+					<ParentScreen
+						user={user}
+						onLogout={() => void handleLogout()}
+						muted={muted}
+						onToggleMute={toggleMute}
+						onBack={backToHub}
+					/>
 				) : (
 					<GameScreen
 						key={`${screen.game.id}-${round}`}

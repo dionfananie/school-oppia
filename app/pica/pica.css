@@ -1616,6 +1616,41 @@
 	color: var(--muted-strong);
 }
 
+/* Auth (login Google) — tombol (<a>) & kartu status */
+.pica .btn:where(a),
+.pica .tbtn:where(a) {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.pica .tbtn.auth-badge {
+	border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+	background: color-mix(in oklch, var(--accent) 12%, var(--surface));
+	color: var(--accent);
+}
+
+.pica .auth-card {
+	margin-bottom: 14px;
+}
+
+.pica .auth-card > h2 {
+	margin-left: 0;
+	margin-bottom: 8px;
+}
+
+.pica .auth-card .btn,
+.pica .auth-card > a {
+	margin-top: 12px;
+	width: 100%;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	text-decoration: none;
+} 
+
 @media (prefers-reduced-motion: reduce) {
 	.pica *,
 	.pica *::before,

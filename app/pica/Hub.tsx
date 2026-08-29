@@ -1,6 +1,8 @@
 import type { ComponentType } from "react";
 import { CATS, GAMES, totalStars, unlocked } from "./data";
 import { load, useHydrated } from "./storage";
+import { googleLoginUrl } from "./auth";
+import type { AuthUser } from "./auth";
 import {
 	IconCatHuruf,
 	IconCatKreatif,
@@ -28,11 +30,15 @@ const CAT_ICONS: Record<CategoryId, ComponentType> = {
 export function Hub({
 	onOpenGame,
 	onOpenParent,
+	user,
+	onLogout,
 	muted,
 	onToggleMute,
 }: {
 	onOpenGame: (id: string) => void;
 	onOpenParent: () => void;
+	user: AuthUser | null;
+	onLogout: () => void;
 	muted: boolean;
 	onToggleMute: () => void;
 }) {
@@ -53,7 +59,21 @@ export function Hub({
 					Pica
 				</div>
 				<span className="tagline">Seri 2 · belajar & bermain</span>
-				<button type="button" className="tbtn" onClick={onOpenParent} aria-label="Menu orang tua">
+				{user ? (
+					<button type="button" className="tbtn" onClick={onLogout} title={`Keluar dari ${user.name || "akun"}`} aria-label="Keluar dari akun">
+						<IconUser />
+					</button>
+				) : (
+					<a href={googleLoginUrl("/")} className="tbtn auth-badge" title="Login untuk sinkronisasi progres">
+						<IconLock />
+					</a>
+				)}
+				<button
+					type="button"
+					className="tbtn"
+					aria-label="Menu orang tua"
+					onClick={onOpenParent}
+				>
 					<IconUser />
 				</button>
 				<button

@@ -3,12 +3,18 @@ import { sfx } from "./audio";
 import { ACH, CATS, GAMES, plOf, stOf, totalStars } from "./data";
 import { IconBack, IconMute, IconSound, IconStar, IconTrophy } from "./icons";
 import { load, save } from "./storage";
+import { googleLoginUrl } from "./auth";
+import type { AuthUser } from "./auth";
 
 export function ParentScreen({
+	user,
+	onLogout,
 	muted,
 	onToggleMute,
 	onBack,
 }: {
+	user: AuthUser | null;
+	onLogout: () => void;
 	muted: boolean;
 	onToggleMute: () => void;
 	onBack: () => void;
@@ -71,6 +77,30 @@ export function ParentScreen({
 					{muted ? <IconMute /> : <IconSound />}
 				</button>
 			</header>
+
+			{user ? (
+				<div className="parent-card auth-card">
+					<h2 style={{ fontSize: 16 }}>Sinkronisasi aktif</h2>
+					<p className="pnote">
+						Login sebagai <b>{user.name || user.email}</b> — progres otomatis disimpan ke
+						akun & tersinkron di semua perangkat.
+					</p>
+					<button type="button" className="btn btn-ghost" onClick={onLogout}>
+						Keluar dari akun
+					</button>
+				</div>
+			) : (
+				<div className="parent-card auth-card">
+					<h2 style={{ fontSize: 16 }}>Sinkronkan progres</h2>
+					<p className="pnote">
+						Login dengan Google agar progres anak tersimpan di server dan bisa tersambung di
+						perangkat lain. Tanpa login, progres hanya tersimpan di perangkat ini.
+					</p>
+					<a href={googleLoginUrl("/")} className="btn btn-ghost">
+						Login dengan Google
+					</a>
+				</div>
+			)}
 
 			<div className="parent-card">
 				<h2>Laporan Belajar</h2>
