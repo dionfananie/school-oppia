@@ -42,6 +42,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
 			</head>
 			<body>
 				{children}
+				<footer
+					style={{
+						textAlign: "center",
+						fontSize: "12px",
+						color: "#6b7280",
+						padding: "16px",
+						fontFamily: "system-ui, sans-serif",
+					}}
+				>
+					© {new Date().getFullYear()} Oppia World. All Rights Reserved.
+				</footer>
 				<ScrollRestoration />
 				<Scripts />
 			</body>
