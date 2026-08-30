@@ -84,6 +84,25 @@
 	padding: var(--gutter) var(--gutter) 72px;
 }
 
+/* Game screens: center the play area vertically in the available viewport so
+   the question/board sits in the middle of the page instead of hugging the top. */
+.pica .app-game {
+	display: flex;
+	flex-direction: column;
+	min-height: calc(100svh - var(--gutter) * 2);
+	justify-content: center;
+}
+.pica .app-game .top {
+	flex: none;
+}
+.pica .app-game .stage,
+.pica .app-game .stage-end {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 .pica .i {
 	width: 24px;
 	height: 24px;

@@ -92,7 +92,7 @@ export function PicaGames() {
 
 	return (
 		<div className="pica">
-			<div className="app">
+			<div className={`app${screen.name === "game" ? " app-game" : ""}`}>
 				{screen.name === "hub" ? (
 					<Hub
 						onOpenGame={openGame}
