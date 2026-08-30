@@ -133,20 +133,57 @@ function genLetter(g: GameDef, lv: number): Question {
 	return { type: "letter", mode: (g.sub ?? "tebak") as LetterMode, ans: t, opts, audio: audioOn };
 }
 
+/**
+ * Pick a second item whose pictogram is guaranteed to differ visually from a
+ * given one. Mirror tricks (`scaleX(-1)`) are invisible for horizontally
+ * symmetric drawings and SIM only covers 4 pairs, so for "type"/"mirror"
+ * rounds we fall back to a genuinely different item — an odd tile the child
+ * can actually see. `big` (scale/size) stays as the subtle variant.
+ */
+function distinctOdd(t: Item): { oddSvg: string; cls: string } {
+	const others = svgOf(t);
+	// Prefer an item from MIXED whose markup differs — guaranteed visible.
+	for (const cand of shuffle(MIXED)) {
+		if (cand.id === t.id) continue;
+		if (svgOf(cand) !== others) return { oddSvg: svgOf(cand), cls: "big" };
+	}
+	// No visibly-different item exists (degenerate) — nudge size so it stands out.
+	return { oddSvg: others, cls: "big" };
+}
+
 function genOdd(_g: GameDef, lv: number): Question {
 	const size = [4, 6, 9, 12, 16][lv - 1];
 	const t = pick(MIXED);
-	let oddSvg = svgOf(t), cls = "";
+	const others = svgOf(t);
+	let oddSvg = others,
+		cls = "";
 	const mode = lv === 3 ? "type" : lv % 2 === 0 ? "big" : "mirror";
 	if (mode === "type") {
 		const sim = pick(SIM.filter((p) => p[0] === t.id || p[1] === t.id));
 		if (sim) {
 			const oid = sim[0] === t.id ? sim[1] : sim[0];
-			if (BY[oid]) oddSvg = svgOf(BY[oid]);
-			else cls = "mirror";
-		} else cls = "mirror";
-	} else cls = mode;
-	return { type: "odd", others: svgOf(t), odd: oddSvg, cls, size };
+			if (BY[oid] && svgOf(BY[oid]) !== others) {
+				// A genuinely different-but-similar pair — great for lv3.
+				oddSvg = svgOf(BY[oid]);
+				cls = "big";
+			} else {
+				// Fallback: definitely-different item.
+				({ oddSvg, cls } = distinctOdd(t));
+			}
+		} else {
+			// Item not in the pair list — swap in a guaranteed-different odd tile.
+			({ oddSvg, cls } = distinctOdd(t));
+		}
+	} else if (mode === "mirror") {
+		// Mirror (`scaleX(-1)`) is invisible on horizontally-symmetric drawings,
+		// which would make the grid look identical and block the child from
+		// spotting a difference. Instead of guessing which items are symmetric,
+		// always fall back to a genuinely visible different odd tile.
+		({ oddSvg, cls } = distinctOdd(t));
+	} else {
+		cls = "big";
+	}
+	return { type: "odd", others, odd: oddSvg, cls, size };
 }
 
 function genOrder(g: GameDef, lv: number): Question {

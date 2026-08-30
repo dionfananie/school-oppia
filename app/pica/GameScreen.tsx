@@ -30,7 +30,10 @@ export function GameScreen({
 }) {
 	const level = useMemo(() => load(`lv.${game.id}`, 1), [game.id]);
 	const isEngine = ENGINE_TYPES.has(game.t);
-	const [questions] = useState<Question[]>(() => generateQuestions(game, level));
+	// Engine games (memory/puzzle/simon/color/build) render from Engines.tsx and never
+	// need a generated question set — generating one for them would hit genOne's default
+	// genPick with no `set` and crash (target is undefined). Skip them.
+	const [questions] = useState<Question[]>(() => (isEngine ? [] : generateQuestions(game, level)));
 	const [qIdx, setQIdx] = useState(0);
 	const [score, setScore] = useState(0);
 	const scoreRef = useRef(0);
