@@ -1,109 +1,70 @@
-# Welcome to React Router + Cloudflare Workers!
+# Pica Games (school-oppia)
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/react-router-starter-template)
+Aplikasi belajar sambil bermain untuk anak **2-7 tahun**, bagian dari ekosistem Oppia World. Tanpa iklan, antarmuka bahasa Indonesia, memakai ikon SVG flat dan suara. Live di **https://pica.oppia.world**.
 
-![React Router Starter Template Preview](https://imagedelivery.net/wSMYJvS3Xw-n339CbDyDIA/bfdc2f85-e5c9-4c92-128b-3a6711249800/public)
+## Fitur
 
-<!-- dash-content-start -->
+**Puluhan game dalam 6 kategori (total 34 game):**
 
-A modern, production-ready template for building full-stack React applications using [React Router](https://reactrouter.com/) and the [Cloudflare Vite plugin](https://developers.cloudflare.com/workers/vite-plugin/).
+- **Kenali** (8) - tebak hewan, warna, buah, kendaraan
+- **Cocokkan** (5) - cocokkan warna, hewan, pasangan, hewan-rumah, hewan-makanan
+- **Hitung** (4) - hitung hewan/buah, pilih angka, lebih banyak
+- **Logika & Memori** (8) - memory card, cari yang berbeda, urutkan angka, lanjutkan pola, mana yang hilang, puzzle 2-4 dan 6-9 potong
+- **Huruf & Kata** (5) - tebak huruf, huruf besar-kecil, huruf awal, dengarkan & pilih, susun kata
+- **Kreatif** (4) - mewarnai, piano, drum, shape builder
 
-## Features
+**Sistem bintang & unlock:**
+- Satu ronde berisi 8 pertanyaan; skor 0-8 bintang per game disimpan di perangkat (`localStorage`).
+- **Seri 1** selalu terbuka. **Seri 2** terbuka setelah anak mengumpulkan sejumlah bintang (ambang 0-28) dari seluruh game. Ada mode bebas yang membuka semua.
+- 10 penghargaan (achievement) dari aktifitas belajar.
+- Progress bisa disinkronkan lintas perangkat lewat login Google.
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-- 🔎 Built-in Observability to monitor your Worker
-<!-- dash-content-end -->
+**Ramah anak & orang tua:** menu orang tua (laporan, reset progres), toggle suara, animasi, dan audio edukatif.
 
-## Getting Started
+## Cara Kerja
 
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
+Semua game dikelola lewat mesin pertanyaan di `app/pica/`. Tiap game memiliki generator soal sendiri (kenal, cocokkan, hitung, bandingkan, cari-beda, urutkan, pola, hilang, angka/huruf, mewarnai, simon, bangun) yang dirender `GameScreen`.
 
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/react-router-starter-template
+## Struktur Folder
+
+```
+app/pica/            Logika permainan
+  data.ts            Game, kategori, kumpulan benda, penghargaan
+  questions.ts       Generator soal
+  Engines.tsx        Mesin untuk memory/odd/order/pat/miss/puzzle/letter/color/simon/build
+  GameScreen.tsx     Layar bermain + skor
+  Hub.tsx            Menu pemilihan game
+  ParentScreen.tsx   Menu orang tua
+  auth.ts            Login Google + sync progres
+  storage.ts         Progress lokal
+  audio.ts, icons.tsx
+app/routes/home.tsx  Aplikasi shell (route tunggal)
+workers/             Cloudflare Worker: app, api/auth, api/progress, lib
+migrations/          Skema D1 (pica_db)
+public/              Aset PWA (manifest, service worker)
 ```
 
-A live public deployment of this template is available at [https://react-router-starter-template.templates.workers.dev](https://react-router-starter-template.templates.workers.dev)
+## Teknologi
 
-### Installation
+- React Router 7 + React 19 (SSR) + TypeScript
+- Tailwind CSS v4
+- Cloudflare Workers + D1 database (`pica-db`) + Google OAuth
+- PWA: dapat diinstal & dibuka offline
 
-Install the dependencies:
+## Scripts
 
-```bash
-npm install
-```
-
-### Development
-
-Start the development server with HMR:
-
-```bash
-npm run dev
-```
-
-Your application will be available at `http://localhost:5173`.
-
-## Typegen
-
-Generate types for your Cloudflare bindings in `wrangler.json`:
-
-```sh
-npm run typegen
-```
-
-## Building for Production
-
-Create a production build:
-
-```bash
-npm run build
-```
-
-## Previewing the Production Build
-
-Preview the production build locally:
-
-```bash
-npm run preview
-```
+| Perintah            | Deskripsi                          |
+| ------------------- | ---------------------------------- |
+| `npm run dev`       | Jalankan dev server dengan HMR     |
+| `npm run build`     | Build produksi                     |
+| `npm run typecheck` | Typegen + `tsc -b`                 |
+| `npm run check`     | Typecheck + build + wrangler dry-run |
+| `npm run deploy`    | Deploy ke Cloudflare Workers       |
 
 ## Deployment
 
-If you don't have a Cloudflare account, [create one here](https://dash.cloudflare.com/sign-up)! Go to your [Workers dashboard](https://dash.cloudflare.com/?to=%2F%3Aaccount%2Fworkers-and-pages) to see your [free custom Cloudflare Workers subdomain](https://developers.cloudflare.com/workers/configuration/routing/workers-dev/) on `*.workers.dev`.
-
-Once that's done, you can build your app:
-
-```sh
-npm run build
-```
-
-And deploy it:
-
-```sh
-npm run deploy
-```
-
-To deploy a preview URL:
-
-```sh
-npx wrangler versions upload
-```
-
-You can then promote a version to production after verification or roll it out progressively.
-
-```sh
-npx wrangler versions deploy
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
+Push ke cabang `master` memicu auto-deploy ke https://pica.oppia.world. Bagian dari keluarga produk Oppia World di bawah oppia.world.
 
 ---
 
-Built with ❤️ using React Router.
+© Oppia World. All Rights Reserved.
