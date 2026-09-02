@@ -103,6 +103,127 @@
 	justify-content: center;
 }
 
+/* ─── popup game terkunci (modal) ─────────────────────────────────── */
+.pica .lock-pop-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 60;
+	display: grid;
+	place-items: center;
+	padding: var(--gutter);
+	background: color-mix(in oklch, var(--fg) 32%, transparent);
+	backdrop-filter: blur(3px);
+}
+
+.pica .lock-pop {
+	width: 100%;
+	max-width: 380px;
+	border-radius: var(--radius-lg);
+	background: var(--surface);
+	border: 1px solid var(--border);
+	box-shadow: 0 24px 48px color-mix(in oklch, var(--fg) 18%, transparent);
+	padding: 26px;
+	text-align: center;
+}
+
+.pica .lock-pop-head {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
+.pica .lock-pop-ic {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 14px;
+	background: var(--tile-sun);
+	color: var(--ink-sun);
+	flex: none;
+}
+
+.pica .lock-pop-ic .i {
+	width: 24px;
+	height: 24px;
+}
+
+.pica .lock-pop-head h2 {
+	margin: 0;
+	font-family: var(--font-display);
+	font-size: 20px;
+	font-weight: 800;
+	letter-spacing: -0.2px;
+	color: var(--fg);
+}
+
+.pica .lock-pop-text {
+	margin: 18px 0 0;
+	font-size: var(--fs-body);
+	color: var(--muted);
+	line-height: 1.5;
+}
+
+.pica .lock-pop-text b {
+	color: var(--fg);
+}
+
+.pica .lock-stars {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	margin: 18px 0;
+}
+
+.pica .lock-stars-bar {
+	display: block;
+	height: 12px;
+	border-radius: 999px;
+	background: var(--border);
+	overflow: hidden;
+}
+
+.pica .lock-stars-fill {
+	display: block;
+	height: 100%;
+	border-radius: 999px;
+	background: linear-gradient(90deg, var(--gold), color-mix(in oklch, var(--gold) 70%, white));
+	transition: width 0.3s ease;
+}
+
+.pica .lock-stars-txt {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	font-size: var(--fs-meta);
+	font-weight: 700;
+	color: var(--fg);
+}
+
+.pica .lock-stars-txt .i {
+	width: 16px;
+	height: 16px;
+	color: var(--gold);
+}
+
+.pica .lock-login {
+	width: 100%;
+	margin-top: 2px;
+}
+
+.pica .lock-hint {
+	margin: 6px 0 2px;
+	font-size: var(--fs-meta);
+	color: var(--muted-strong);
+}
+
+.pica .lock-close {
+	width: 100%;
+	margin-top: 10px;
+}
+
 .pica .i {
 	width: 24px;
 	height: 24px;

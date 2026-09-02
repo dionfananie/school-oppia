@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { audioState, sfx, speak, stopSpeak } from "./audio";
-import { GAMES, unlocked } from "./data";
+import { GAMES, totalStars, unlocked } from "./data";
 import { GameScreen } from "./GameScreen";
 import { Hub } from "./Hub";
 import { ParentScreen } from "./ParentScreen";
@@ -11,8 +11,11 @@ import {
 	pushProgress,
 	useAuth,
 	notifyAuthChange,
+	googleLoginUrl,
+	type AuthUser,
 } from "./auth";
 import type { GameDef } from "./types";
+import { IconLock, IconStar } from "./icons";
 import "./pica.css";
 
 type Screen = { name: "hub" } | { name: "parent" } | { name: "game"; game: GameDef };
@@ -21,6 +24,7 @@ export function PicaGames() {
 	const [muted, setMuted] = useState(false);
 	const [screen, setScreen] = useState<Screen>({ name: "hub" });
 	const [round, setRound] = useState(0);
+	const [lockInfo, setLockInfo] = useState<GameDef | null>(null);
 	const { user, loading: authLoading } = useAuth();
 	const syncedInitialRef = useRef(false);
 
@@ -74,6 +78,7 @@ export function PicaGames() {
 		if (!unlocked(id)) {
 			sfx.bad();
 			speak("Kumpulkan bintang dulu ya!");
+			setLockInfo(game);
 			return;
 		}
 		setScreen({ name: "game", game });
@@ -120,6 +125,80 @@ export function PicaGames() {
 						onRestart={restart}
 					/>
 				)}
+			</div>
+
+			{lockInfo && (
+				<LockPopup
+					game={lockInfo}
+					stars={totalStars()}
+					user={user}
+					onClose={() => setLockInfo(null)}
+				/>
+			)}
+		</div>
+	);
+}
+
+/** Popup saat anak mencoba game yang masih terkunci bintang. */
+function LockPopup({
+	game,
+	stars,
+	user,
+	onClose,
+}: {
+	game: GameDef;
+	stars: number;
+	user: AuthUser | null;
+	onClose: () => void;
+}) {
+	const need = game.u ?? 0;
+	const left = Math.max(0, need - stars);
+	const done = Math.min(1, need === 0 ? 1 : stars / need);
+
+	return (
+		<div
+			className="lock-pop-backdrop"
+			role="dialog"
+			aria-modal="true"
+			aria-label={`${game.name} masih terkunci`}
+			onClick={(e) => {
+				if (e.target === e.currentTarget) onClose();
+			}}
+		>
+			<div className="lock-pop">
+				<div className="lock-pop-head">
+					<span className="lock-pop-ic">
+						<IconLock />
+					</span>
+					<h2>{game.name} masih terkunci</h2>
+				</div>
+
+				<p className="lock-pop-text">
+					Kumpulkan <b>{need} bintang</b> dulu untuk membukanya.
+				</p>
+
+				<div className="lock-stars" aria-hidden>
+					<span className="lock-stars-bar">
+						<span className="lock-stars-fill" style={{ width: `${done * 100}%` }} />
+					</span>
+					<span className="lock-stars-txt">
+						<IconStar />
+						{stars} / {need} bintang
+						{left > 0 ? ` · kurang ${left}` : ""}
+					</span>
+				</div>
+
+				{!user ? (
+					<a href={googleLoginUrl("/")} className="btn btn-primary lock-login">
+						Login supaya progresmu tersimpan
+					</a>
+				) : (
+					<p className="lock-hint">Kamu masih perlu {left} bintang lagi.</p>
+				)}
+
+				<button type="button" className="btn btn-ghost lock-close" onClick={onClose}>
+					Tutup
+				</button>
 			</div>
 		</div>
 	);
